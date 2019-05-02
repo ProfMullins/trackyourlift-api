@@ -1,0 +1,183 @@
+{
+  "swagger": "2.0",
+  "info": {
+    "version": "1.0.0",
+    "title": "Track Your Lift API",
+    "description": "Track Your Lift Application API",
+    "license": {
+      "name": "MIT",
+      "url": "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host": "localhost:3000",
+  "basePath": "/api/v1",
+  "tags": [
+    {
+      "name": "Users",
+      "description": "API for users in the system"
+    }
+  ],
+  "schemes": [
+    "http",
+    "https"
+  ],
+  "consumes": [
+    "application/json"
+  ],
+  "produces": [
+    "application/json"
+  ],
+  "paths": {
+    "/users": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Create new user in system",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User that we want to create",
+            "schema": {
+              "$ref": "#/definitions/NewUser"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New user is created",
+            "schema": {
+              "$ref": "#/definitions/NewUser"
+            }
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [
+          "Users"
+        ],
+        "description": "Fetch user",
+        "parameters": [
+          {
+            "name": "user",
+            "in": "body",
+            "description": "User that we want to fetch",
+            "schema": {
+              "$ref": "#/definitions/ReturningUser"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "User is found",
+            "schema": {
+              "$ref": "#/definitions/NewUser"
+            }
+          }
+        }
+      }
+    }
+  },
+  "definitions": {
+    "NewUser": {
+      "required": [
+        "email",
+        "firstName",
+        "birthYear",
+        "birthMonth",
+        "birthDay"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "uniqueItems": true,
+          "example": "test@example.com"
+        },
+        "firstName": {
+          "type": "string",
+          "example": "John"
+        },
+        "birthYear": {
+          "type": "integer",
+          "minimum": 1900,
+          "maximum": 2019,
+          "example": 1981
+        },
+        "birthMonth": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12,
+          "example": 7
+        },
+        "birthDay": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 31,
+          "example": 9
+        }
+      }
+    },
+    "ReturningUser": {
+      "required": [
+        "email"
+      ],
+      "properties": {
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        }
+      }
+    },
+    "User": {
+      "required": [
+        "email",
+        "firstName",
+        "_id"
+      ],
+      "properties": {
+        "_id": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "email": {
+          "type": "string",
+          "uniqueItems": true
+        },
+        "birthYear": {
+          "type": "integer",
+          "minimum": 1900,
+          "maximum": 2019,
+          "example": 1981
+        },
+        "birthMonth": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 12,
+          "example": 7
+        },
+        "birthDay": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 31,
+          "example": 9
+        },
+        "firstName": {
+          "type": "string"
+        }
+      }
+    },
+    "Users": {
+      "type": "array",
+      "$ref": "#/definitions/User"
+    }
+  }
+}
