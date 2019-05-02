@@ -61,8 +61,44 @@ describe('TrackYourLift API', () => {
                 .expect("Content-type",/json/)
                 .expect(500) // THis is HTTP response
                 .end((err, res) => {
-                    // HTTP status should be 200
+                    // HTTP status should be 500
                     res.status.should.equal(500);
+                    done();
+                });
+        });
+
+        it('should return existing user', (done) => {
+            // calling home page api
+            server
+                .post('/api/v1/users/login')
+                .send({
+                    email:  'testuser@example.com',
+                })
+                .expect("Content-type",/json/)
+                .expect(200)
+                .end((err, res) => {
+                    // HTTP status should be 200
+                    res.status.should.equal(200);
+                    res.body.should.have.property('_id');
+                    res.body.firstName.should.equal('john');
+                    done();
+                });
+        });
+
+        it('should not find user', (done) => {
+            let randEmail = randStr.generate(14) + '@example.com';
+            // calling home page api
+            server
+                .post('/api/v1/users/login')
+                .send({
+                    email:  randEmail,
+                })
+                .expect("Content-type",/json/)
+                .expect(200)
+                .end((err, res) => {
+                    // HTTP status should be 200
+                    res.status.should.equal(200);
+                    res.body.should.not.have.property('_id');
                     done();
                 });
         });
