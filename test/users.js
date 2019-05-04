@@ -7,6 +7,8 @@ const randStr = require('randomstring');
 
 const server = supertest.agent('http://localhost:3000');
 
+let testEmail;
+
 describe('TrackYourLift API', () => {
     describe('API is up', () => {
         it('should return 200', (done) => {
@@ -26,6 +28,7 @@ describe('TrackYourLift API', () => {
     describe('Create Users API', () => {
         it('should return 200', (done) => {
             let randEmail = randStr.generate(12) + '@example.com';
+            testEmail = randEmail;
             // calling home page api
             server
                 .post('/api/v1/users')
@@ -71,12 +74,13 @@ describe('TrackYourLift API', () => {
                 });
         });
 
-        /*it('should return existing user', (done) => {
+        it('should return existing user', (done) => {
             // calling home page api
             server
                 .post('/api/v1/users/login')
                 .send({
-                    email: 'testuser@example.com',
+                    email: testEmail,
+                    password: "Abcd1234!"
                 })
                 .expect("Content-type", /json/)
                 .expect(200)
@@ -87,7 +91,7 @@ describe('TrackYourLift API', () => {
                     res.body.firstName.should.equal('john');
                     done();
                 });
-        });*/
+        });
 
         it('should not find user', (done) => {
             let randEmail = randStr.generate(14) + '@example.com';

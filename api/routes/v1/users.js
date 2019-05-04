@@ -57,8 +57,21 @@ router.post('/', async (req, res, next) => {
 router.post('/login', async (req, res, next) => {
     try {
         let result = await User.findOne({'email': req.body.email});
-        console.log(result);
-        res.send(result);
+
+        if (!result || !result['_id']) {
+            return res.status(200).send({'error': { 'email': 'not_found'}});
+        }
+
+        bcrypt.compare(req.body.password, result.password, function(err, bcryptRes) {
+            if (err) {
+                return res.status(401).send({'error': { 'something': 'something_else'}});
+            }
+            else if (!bcryptRes) {
+                return res.status(401).send({'error': { 'email': 'incorrect_password'}});
+            }
+
+            return res.send(result);
+        });
     } catch (error) {
         console.log(error);
         res.status(500).send(error);

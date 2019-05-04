@@ -87,6 +87,6 @@ exports.validateBody = async (body) => {
     if (errors['email'].length > 0 || errors['password'].length > 0 || errors['birthDate'].length > 0 || errors['firstName']) {
         return errors;
     }
-    
+
     return {};
 };
