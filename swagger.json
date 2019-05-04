@@ -94,7 +94,8 @@
         "firstName",
         "birthYear",
         "birthMonth",
-        "birthDay"
+        "birthDay",
+        "password"
       ],
       "properties": {
         "email": {
@@ -108,32 +109,33 @@
         },
         "birthYear": {
           "type": "integer",
-          "minimum": 1900,
-          "maximum": 2019,
           "example": 1981
         },
         "birthMonth": {
           "type": "integer",
-          "minimum": 1,
-          "maximum": 12,
           "example": 7
         },
         "birthDay": {
           "type": "integer",
-          "minimum": 1,
-          "maximum": 31,
           "example": 9
+        },
+        "password": {
+          "type": "string"
         }
       }
     },
     "ReturningUser": {
       "required": [
-        "email"
+        "email",
+        "password"
       ],
       "properties": {
         "email": {
           "type": "string",
           "uniqueItems": true
+        },
+        "password": {
+          "type": "string"
         }
       }
     },
@@ -154,20 +156,14 @@
         },
         "birthYear": {
           "type": "integer",
-          "minimum": 1900,
-          "maximum": 2019,
           "example": 1981
         },
         "birthMonth": {
           "type": "integer",
-          "minimum": 1,
-          "maximum": 12,
           "example": 7
         },
         "birthDay": {
           "type": "integer",
-          "minimum": 1,
-          "maximum": 31,
           "example": 9
         },
         "firstName": {

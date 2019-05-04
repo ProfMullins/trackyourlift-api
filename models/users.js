@@ -28,6 +28,10 @@ let userSchema = new mongoose.Schema({
         type: Number,
         min: [18, 'too young'],
         max: 100
+    },
+    password: {
+        type: String,
+        required: true
     }
 });
 
