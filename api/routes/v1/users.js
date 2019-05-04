@@ -20,34 +20,39 @@ router.post('/', async (req, res, next) => {
         let errors = {};
         errors = await validation.validateBody(req.body);
 
-        if (errors['email'].length > 0 || errors['firstName'].length > 0 || errors['password'].length > 0 || errors['birthDate'].length > 0) {
+        if (Object.keys(errors).length !== 0 && errors.constructor === Object) {
             return res.json({'errors': errors});
         }
 
-        let hashedPassword;
+        let age = await utils.getAgeFromBirthdate(req.body.birthYear, req.body.birthMonth, req.body.birthDay);
         await bcrypt.hash(req.body.password, bcryptSaltRounds, (err, hash) => {
             if (err) {
                 console.log("bcrypt hash error:", err);
                 res.status(500).send(err);
             }
 
-            hashedPassword = hash;
-        });
-
-        let age = await utils.getAgeFromBirthdate(req.body.birthYear, req.body.birthMonth, req.body.birthDay);
-        let newUser = new User({
-            'email': req.body.email,
-            'firstName': req.body.firstName,
-            'birthDate': req.body.birthYear + '-' + req.body.birthMonth + '-' + req.body.birthDay,
-            'age': age
-        });
-        let result = await newUser.save();
-
-        res.send(result);
-    } catch (error) {
+            let newUser = new User({
+                'email': req.body.email,
+                'firstName': req.body.firstName,
+                'birthDate': req.body.birthYear + '-' + req.body.birthMonth + '-' + req.body.birthDay,
+                'age': age,
+                'password': hash
+            });
+            return newUser.save()
+                .then(result => {
+                    res.send(result)
+                })
+                .catch(err => {
+                    console.log(err);
+                    res.status(500).send({'error': 'something_else'});
+                });
+        })
+    } catch
+        (error) {
         res.status(500).send(error);
     }
-});
+})
+;
 
 router.post('/login', async (req, res, next) => {
     try {

@@ -84,9 +84,9 @@ exports.validateBody = async (body) => {
 
     errors['birthDate'] = await checkBirthDate(body.birthYear, body.birthMonth, body.birthDay);
 
-    if (errors['email'].length > 0 || errors['firstName'].length > 0 || errors['password'].length > 0 || errors['birthDate'].length > 0) {
+    if (errors['email'].length > 0 || errors['password'].length > 0 || errors['birthDate'].length > 0 || errors['firstName']) {
         return errors;
     }
-
+    
     return {};
 };
