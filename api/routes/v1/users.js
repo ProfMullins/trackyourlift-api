@@ -12,7 +12,7 @@ const bcryptSaltRounds = 11;
 const User = mongoose.model('user', UserSchema, 'users');
 
 router.get('/test', (req, res) => {
-    return res.status(200).send({"response": "users api"});
+    return res.status(200).send({'response': 'success'});
 });
 
 router.post('/', async (req, res, next) => {

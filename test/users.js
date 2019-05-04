@@ -12,24 +12,26 @@ describe('TrackYourLift API', () => {
         it('should return 200', (done) => {
             // calling home page api
             server
-                .get('/api')
+                .get('/api/v1/users/test')
                 .expect(200) // THis is HTTP response
                 .end((err, res) => {
                     // HTTP status should be 200
                     res.status.should.equal(200);
+                    res.body.should.have.property('response').equals('success');
                     done();
                 });
         });
     });
 
     describe('Create Users API', () => {
-        /*it('should return 200', (done) => {
+        it('should return 200', (done) => {
             let randEmail = randStr.generate(12) + '@example.com';
             // calling home page api
             server
                 .post('/api/v1/users')
                 .send({
                     email: randEmail,
+                    password: "Abcd1234!",
                     firstName: "John",
                     birthYear: 1980,
                     birthMonth: 1,
@@ -44,7 +46,7 @@ describe('TrackYourLift API', () => {
                     res.body.should.have.property('age').which.is.a.Number();
                     done();
                 });
-        });*/
+        });
 
         it('should return email error', (done) => {
             let randEmail = randStr.generate(12);
