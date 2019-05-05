@@ -99,6 +99,27 @@ describe('TrackYourLift API', () => {
                 });
         });
 
+        it('should fail on missing password', (done) => {
+            server
+                .post('/api/v1/users')
+                .send({
+                    email: testEmail,
+                    firstName: "John",
+                    birthYear: 1980,
+                    birthMonth: 1,
+                    birthDay: 17,
+                    password: ""
+                })
+                .expect("Content-type", /json/)
+                .expect(200)
+                .end((err, res) => {
+                    res.status.should.equal(200);
+                    res.body.should.have.property('errors');
+                    res.body.errors.password.should.be.an.Array();
+                    done();
+                });
+        });
+
         it('should fail on password min length', (done) => {
             server
                 .post('/api/v1/users')
@@ -450,7 +471,9 @@ describe('TrackYourLift API', () => {
                     done();
                 });
         });
+    });
 
+    describe('Login Users API', () => {
         it('should return existing user', (done) => {
             // calling home page api
             server
@@ -477,6 +500,7 @@ describe('TrackYourLift API', () => {
                 .post('/api/v1/users/login')
                 .send({
                     email: randEmail,
+                    password: 'Abcd1234!'
                 })
                 .expect("Content-type", /json/)
                 .expect(200)
@@ -484,6 +508,149 @@ describe('TrackYourLift API', () => {
                     // HTTP status should be 200
                     res.status.should.equal(200);
                     res.body.should.not.have.property('_id');
+                    done();
+                });
+        });
+
+        it('should fail on missing password', (done) => {
+            server
+                .post('/api/v1/users/login')
+                .send({
+                    email: testEmail,
+                    password: ""
+                })
+                .expect("Content-type", /json/)
+                .expect(200)
+                .end((err, res) => {
+                    res.status.should.equal(200);
+                    res.body.should.have.property('errors');
+                    res.body.errors.password.should.be.an.Array();
+                    done();
+                });
+        });
+
+        it('should fail on password min length', (done) => {
+            server
+                .post('/api/v1/users/login')
+                .send({
+                    email: testEmail,
+                    password: "Abcd12!"
+                })
+                .expect("Content-type", /json/)
+                .expect(200) // THis is HTTP response
+                .end((err, res) => {
+                    res.status.should.equal(200);
+                    res.body.should.have.property('errors');
+                    res.body.errors.password.should.be.an.Array();
+                    res.body.errors.password[0].should.equal('min');
+                    done();
+                });
+        });
+
+        it('should fail on password max length', (done) => {
+            server
+                .post('/api/v1/users/login')
+                .send({
+                    email: testEmail,
+                    password: "Abcd12!1dgfh6hfdgjy65rghyrgde4tg7d"
+                })
+                .expect("Content-type", /json/)
+                .expect(200)
+                .end((err, res) => {
+                    res.status.should.equal(200);
+                    res.body.should.have.property('errors');
+                    res.body.errors.password.should.be.an.Array();
+                    res.body.errors.password[0].should.equal('max');
+                    done();
+                });
+        });
+
+        it('should fail on password missing lowercase', (done) => {
+            server
+                .post('/api/v1/users/login')
+                .send({
+                    email: testEmail,
+                    password: "ABCD1234!"
+                })
+                .expect("Content-type", /json/)
+                .expect(200)
+                .end((err, res) => {
+                    res.status.should.equal(200);
+                    res.body.should.have.property('errors');
+                    res.body.errors.password.should.be.an.Array();
+                    res.body.errors.password[0].should.equal('lowercase');
+                    done();
+                });
+        });
+
+        it('should fail on password missing uppercase', (done) => {
+            server
+                .post('/api/v1/users/login')
+                .send({
+                    email: testEmail,
+                    password: "abcd1234!"
+                })
+                .expect("Content-type", /json/)
+                .expect(200)
+                .end((err, res) => {
+                    res.status.should.equal(200);
+                    res.body.should.have.property('errors');
+                    res.body.errors.password.should.be.an.Array();
+                    res.body.errors.password[0].should.equal('uppercase');
+                    done();
+                });
+        });
+
+        it('should fail on password missing digit', (done) => {
+            server
+                .post('/api/v1/users/login')
+                .send({
+                    email: testEmail,
+                    password: "abcdAfghd!"
+                })
+                .expect("Content-type", /json/)
+                .expect(200)
+                .end((err, res) => {
+                    res.status.should.equal(200);
+                    res.body.should.have.property('errors');
+                    res.body.errors.password.should.be.an.Array();
+                    res.body.errors.password[0].should.equal('digits');
+                    done();
+                });
+        });
+
+        it('should fail on password missing special character', (done) => {
+            server
+                .post('/api/v1/users/login')
+                .send({
+                    email: testEmail,
+                    password: "Abcd1234E"
+                })
+                .expect("Content-type", /json/)
+                .expect(200)
+                .end((err, res) => {
+                    res.status.should.equal(200);
+                    res.body.should.have.property('errors');
+                    res.body.errors.password.should.be.an.Array();
+                    res.body.errors.password[0].should.equal('symbols');
+                    done();
+                });
+        });
+
+        it('should fail on space in password', (done) => {
+            server
+                .post('/api/v1/users/login')
+                .send({
+                    email: testEmail,
+                    password: "Abcd 1234!"
+                })
+                .expect("Content-type", /json/)
+                .expect(200)
+                .end((err, res) => {
+                    res.status.should.equal(200);
+                    res.body.should.have.property('errors');
+                    res.body.errors.password.should.be.an.Array();
+                    res.body.errors.password[0].should.equal('spaces');
                     done();
                 });
         });

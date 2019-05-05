@@ -73,7 +73,7 @@ checkBirthDate = (year, month, day) => {
     return errors;
 };
 
-exports.validateBody = async (body) => {
+exports.validateRegBody = async (body) => {
     let errors = {};
 
     errors['email'] = await checkEmail(body.email);
@@ -85,6 +85,20 @@ exports.validateBody = async (body) => {
     errors['birthDate'] = await checkBirthDate(body.birthYear, body.birthMonth, body.birthDay);
 
     if (errors['email'].length > 0 || errors['password'].length > 0 || errors['birthDate'].length > 0 || errors['firstName']) {
+        return errors;
+    }
+
+    return {};
+};
+
+exports.validateLoginBody = async (body) => {
+    let errors = {};
+
+    errors['email'] = await checkEmail(body.email);
+
+    errors['password'] = await checkPassword(body.password);
+
+    if (errors['email'].length > 0 || errors['password'].length > 0) {
         return errors;
     }
 

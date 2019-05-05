@@ -16,7 +16,7 @@ exports.testApi = (req, res) => {
 exports.createUser = async (req, res) => {
     try {
         let errors = {};
-        errors = await validation.validateBody(req.body);
+        errors = await validation.validateRegBody(req.body);
 
         if (Object.keys(errors).length !== 0 && errors.constructor === Object) {
             return res.json({'errors': errors});
@@ -53,6 +53,13 @@ exports.createUser = async (req, res) => {
 
 exports.loginUser = async (req, res) => {
     try {
+        let errors = {};
+        errors = await validation.validateLoginBody(req.body);
+
+        if (Object.keys(errors).length !== 0 && errors.constructor === Object) {
+            return res.json({'errors': errors});
+        }
+
         let result = await User.findOne({'email': req.body.email});
 
         if (!result || !result['_id']) {
