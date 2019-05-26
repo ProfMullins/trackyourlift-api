@@ -11,10 +11,29 @@ const bcryptSaltRounds = 11;
 
 const User = mongoose.model('user', UserSchema, 'users');
 
+/**
+ *
+ * @param {Object} req - request
+ * @param {Object} res - response
+ * @returns {*} - Success response if the API is up
+ */
 exports.testApi = (req, res) => {
     return res.status(200).send({'response': 'success'});
 };
 
+/**
+ *
+ * @param {Object} req - request
+ * @param {Object} req.body - request body
+ * @param {string} req.body.email - Email address
+ * @param {string} req.body.firstName - First name
+ * @param {string} req.body.password - Password
+ * @param {number} req.body.birthYear - Four digit birth year
+ * @param {number} req.body.birthMonth - One or two digit birth month
+ * @param {number} req.body.birthDay - One or two digit birth day
+ * @param {Object} res - response
+ * @returns {Promise<*>} - New user or array of errors
+ */
 exports.createUser = async (req, res) => {
     try {
         let errors = {};
@@ -54,6 +73,15 @@ exports.createUser = async (req, res) => {
     }
 };
 
+/**
+ *
+ * @param {Object} req - request
+ * @param {Object} req.body - request body
+ * @param {string} req.body.email - Email address
+ * @param {string} req.body.password - Password
+ * @param {Object} res - response
+ * @returns {Promise<*>} - User profile or array or errors
+ */
 exports.loginUser = async (req, res) => {
     try {
         let errors = {};

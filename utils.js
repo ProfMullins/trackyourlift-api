@@ -1,5 +1,12 @@
 const moment = require('moment');
 
+/**
+ *
+ * @param {number} year - Four digit year
+ * @param {number} month - One or two digit month
+ * @param {number} day - One or two digit day
+ * @returns {number} Difference between today's date and the date passed in
+ */
 exports.getAgeFromBirthdate = (year, month, day) => {
     let birthDate = year.toString().padStart(2, '0') +
         month.toString().padStart(2, '0') +

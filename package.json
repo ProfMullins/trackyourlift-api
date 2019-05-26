@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "scripts": {
     "start": "nodemon server.js",
+    "generate-docs": "jsdoc -r utils.js validation.js api/ -t node_modules/docdash",
     "test": "mocha"
   },
   "dependencies": {
@@ -21,6 +22,8 @@
   "devDependencies": {
     "chai": "^4.2.0",
     "chai-http": "^4.3.0",
+    "docdash": "^1.1.1",
+    "jsdoc": "^3.6.2",
     "mocha": "^6.1.4",
     "nodemon": "^1.19.0",
     "randomstring": "^1.1.5",

@@ -11,6 +11,11 @@ passwordSchema
     .has().symbols()
     .has().not().spaces();
 
+/**
+ *
+ * @param {string} password - Password
+ * @returns {Array} - Can be null/empty
+ */
 checkPassword = (password) => {
     let errors = [];
 
@@ -19,6 +24,11 @@ checkPassword = (password) => {
     return errors;
 };
 
+/**
+ *
+ * @param {string} email - Email address
+ * @returns {Array} - Can be null/empty
+ */
 checkEmail = (email) => {
     let errors = [];
 
@@ -37,6 +47,11 @@ checkEmail = (email) => {
     return errors;
 };
 
+/**
+ *
+ * @param {string} firstName - First name
+ * @returns {Array} - Can be null/empty
+ */
 checkFirstName = (firstName) => {
     let errors = [];
 
@@ -49,6 +64,13 @@ checkFirstName = (firstName) => {
     }
 };
 
+/**
+ *
+ * @param {number} year - Four digit year
+ * @param {number} month - One or two digit month
+ * @param {number} day - One or two digit day
+ * @returns {Array} - Can be null/empty
+ */
 checkBirthDate = (year, month, day) => {
     let errors = [];
 
@@ -73,6 +95,17 @@ checkBirthDate = (year, month, day) => {
     return errors;
 };
 
+/**
+ *
+ * @param {Object} body - request body
+ * @param {string} body.email - Email address
+ * @param {string} body.firstName - First name
+ * @param {string} body.password - Password
+ * @param {number} body.birthYear - Four digit birth year
+ * @param {number} body.birthMonth - One or two digit birth month
+ * @param {number} body.birthDay - One or two digit birth day
+ * @returns {Promise<{}>} - Promise object representing array or errors (can be null/empty)
+ */
 exports.validateRegBody = async (body) => {
     let errors = {};
 
@@ -91,6 +124,13 @@ exports.validateRegBody = async (body) => {
     return {};
 };
 
+/**
+ *
+ * @param {Object} body - request body
+ * @param {string} body.email - Email address
+ * @param {string} body.password - Password
+ * @returns {Promise<{}>} - Promise object representing array or errors (can be null/empty)
+ */
 exports.validateLoginBody = async (body) => {
     let errors = {};
 
@@ -105,18 +145,33 @@ exports.validateLoginBody = async (body) => {
     return {};
 };
 
+/**
+ *
+ * @param {Object} body - request body
+ * @returns {Promise<void>}
+ */
 exports.validateWorkout = async (body) => {
     let errors = {};
 
     return errors;
 };
 
+/**
+ *
+ * @param {Object} body - request body
+ * @returns {Promise<void>}
+ */
 exports.validateLift = async (body) => {
     let errors = {};
 
     return errors;
 };
 
+/**
+ *
+ * @param {Object} body - request body
+ * @returns {Promise<void>}
+ */
 exports.validateSet = async (body) => {
     let errors = {};
 

@@ -1,7 +1,10 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
 
-
+/**
+ * setSchema schema
+ * @constructor Set
+ */
 let setSchema = new mongoose.Schema({
     weight: {
         type: Number,

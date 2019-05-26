@@ -3,6 +3,10 @@ const validator = require('validator');
 const liftSchema = require('./lift');
 let session = require('express-session');
 
+/**
+ * workoutsSchema schema
+ * @constructor Workouts
+ */
 let workoutsSchema = new mongoose.Schema({
     userId: {
         type: mongoose.ObjectId,

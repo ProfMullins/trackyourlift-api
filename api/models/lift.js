@@ -2,7 +2,10 @@ const mongoose = require('mongoose');
 const validator = require('validator');
 const setSchema = require('./set');
 
-
+/**
+ * liftSchema schema
+ * @constructor Lift
+ */
 let liftSchema = new mongoose.Schema({
     liftName: {
         type: String,
