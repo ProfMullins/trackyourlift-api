@@ -104,3 +104,21 @@ exports.validateLoginBody = async (body) => {
 
     return {};
 };
+
+exports.validateWorkout = async (body) => {
+    let errors = {};
+
+    return errors;
+};
+
+exports.validateLift = async (body) => {
+    let errors = {};
+
+    return errors;
+};
+
+exports.validateSet = async (body) => {
+    let errors = {};
+
+    return errors;
+};

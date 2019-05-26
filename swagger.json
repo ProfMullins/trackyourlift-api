@@ -15,6 +15,10 @@
     {
       "name": "Users",
       "description": "API for users in the system"
+    },
+    {
+      "name": "Workouts",
+      "description": "API for workouts in the system"
     }
   ],
   "schemes": [
@@ -81,6 +85,93 @@
             "description": "User is found",
             "schema": {
               "$ref": "#/definitions/NewUser"
+            }
+          }
+        }
+      }
+    },
+    "/workouts": {
+      "post": {
+        "tags": [
+          "Workouts"
+        ],
+        "description": "Create new workout in system",
+        "parameters": [
+          {
+            "name": "workout",
+            "in": "body",
+            "description": "Workout",
+            "schema": {
+              "$ref": "#/definitions/NewWorkout"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New workout is created",
+            "schema": {
+              "$ref": "#/definitions/NewWorkout"
+            }
+          }
+        }
+      }
+    },
+    "/workouts/lift": {
+      "post": {
+        "tags": [
+          "Workouts"
+        ],
+        "description": "Create new lift for workout in system",
+        "parameters": [
+          {
+            "name": "lift",
+            "in": "body",
+            "description": "lift",
+            "schema": {
+              "$ref": "#/definitions/NewLift"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New lift is created",
+            "schema": {
+              "$ref": "#/definitions/NewLift"
+            }
+          }
+        }
+      }
+    },
+    "/workouts/set": {
+      "post": {
+        "tags": [
+          "Workouts"
+        ],
+        "description": "Create new set for lift in system",
+        "parameters": [
+          {
+            "name": "set",
+            "in": "body",
+            "description": "Set",
+            "schema": {
+              "$ref": "#/definitions/NewSet"
+            }
+          }
+        ],
+        "produces": [
+          "application/json"
+        ],
+        "responses": {
+          "200": {
+            "description": "New set is created",
+            "schema": {
+              "$ref": "#/definitions/NewSet"
             }
           }
         }
@@ -168,6 +259,69 @@
         },
         "firstName": {
           "type": "string"
+        }
+      }
+    },
+    "NewWorkout": {
+      "required": [
+        "userId",
+        "workoutName",
+        "year",
+        "month",
+        "day"
+      ],
+      "properties": {
+        "userId": {
+          "type": "string",
+          "example": "abcd1234"
+        },
+        "workoutName": {
+          "type": "string",
+          "example": "StrongLifts 5x5"
+        },
+        "year": {
+          "type": "integer",
+          "example": 2019
+        },
+        "month": {
+          "type": "integer",
+          "example": 5
+        },
+        "day": {
+          "type": "integer",
+          "example": 25
+        }
+      }
+    },
+    "NewLift": {
+      "required": [
+        "liftName",
+        "numSets"
+      ],
+      "properties": {
+        "liftName": {
+          "type": "string",
+          "example": "Benchpress"
+        },
+        "numSets": {
+          "type": "integer",
+          "example": 3
+        }
+      }
+    },
+    "NewSet": {
+      "required": [
+        "weight",
+        "reps"
+      ],
+      "properties": {
+        "weight": {
+          "type": "number",
+          "example": "225"
+        },
+        "reps": {
+          "type": "integer",
+          "example": 5
         }
       }
     },

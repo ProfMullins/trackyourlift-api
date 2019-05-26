@@ -5,6 +5,8 @@ const UserSchema = require('../../models/users');
 const utils = require('../../../utils');
 const validation = require('../../../validation');
 
+let session = require('express-session');
+
 const bcryptSaltRounds = 11;
 
 const User = mongoose.model('user', UserSchema, 'users');
@@ -38,6 +40,7 @@ exports.createUser = async (req, res) => {
             });
             return newUser.save()
                 .then(result => {
+                    req.session.userId = result._id;
                     res.status(201).send(result)
                 })
                 .catch(err => {

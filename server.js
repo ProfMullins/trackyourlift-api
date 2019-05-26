@@ -2,11 +2,13 @@ const http = require('http');
 const express = require('express');
 const mongoose = require('mongoose');
 require('dotenv').config();
+const session = require('express-session');
 
 const swaggerUi = require('swagger-ui-express');
 const swaggerDocument = require('./swagger.json');
 
 const usersRouter = require('./api/routes/v1/users');
+const workoutsRouter = require('./api/routes/v1/workouts');
 
 const app = express();
 
@@ -19,8 +21,11 @@ app.use(function(req, res, next) {
   next();
 });
 
+app.use(session({ secret: 'superman is the best super hero', cookie: { maxAge: 7200 }}));
+
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use('/api/v1/users', usersRouter);
+app.use('/api/v1/workouts', workoutsRouter);
 
 mongoose.connect(process.env.MONGODB_CONN, { useNewUrlParser: true });
 
